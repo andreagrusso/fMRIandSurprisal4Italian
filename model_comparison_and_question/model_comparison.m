@@ -82,7 +82,7 @@ for voi_idx = 1:NrOfVOIs
         'VariableNames',{'SubjData','SubsName','SwS','InvSwS','Freq','InvFreq','Dur','InvDur','Env','InvEnv'});
     tbl_ls = table(y,subs_id,ls_data(:,1),ls_data(:,2),ls_data(:,3),ls_data(:,4),ls_data(:,5),...
         ls_data(:,6),ls_data(:,7),ls_data(:,8),...
-        'VariableNames',{'SubjData','SubsName','Lex','InvLex','Freq','InvFreq','Dur','InvDur','Env','InvEnv'});
+        'VariableNames',{'SubjData','SubsName','LS','InvLS','Freq','InvFreq','Dur','InvDur','Env','InvEnv'});
     %models with fixed effects. Subjects are treated as random effect
     fixed_sws = fitlme(sws_fixed, 'SubjData ~ Freq + InvFreq + Dur + InvDur + Env + InvEnv + (1|SubsName)');
     fixed_ls = fitlme(sws_fixed, 'SubjData ~ Freq + InvFreq + Dur + InvDur + Env + InvEnv + (1|SubsName)');
