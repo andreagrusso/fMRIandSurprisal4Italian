@@ -43,12 +43,16 @@ for i = 1 : NrOfVTCs
 end
 
 
-%% Built models
+%% Build models
 subs_id = [];
+speech_dir = [];
 
 %vector that assigns a numerical id to the subject
-for i = 1: NrOfVTCs
-    subs_id = [subs_id;i*ones(NT,1)];
+k=1;
+for i = 1: 2: NrOfVTCs
+    subs_id = [subs_id;k*ones(2*NT,1)];
+    k=k+1;
+    speech_dir = [speech_dir; ones(NT,1); 2*ones(NT,1)];
 end
 
 results.VoiNames = voi_names;
@@ -93,7 +97,7 @@ for voi_idx = 1:NrOfVOIs
     
     %the two models are not nested so we need to add the simulation 
     disp('Estimating comparison SwS vs LS......')
-    %results.comparisons.regions{voi_idx,1} = compare(ls_m,sws_m,'NSim',10000);    %the base models (no surprisal) are nested into the model with
+    results.comparisons.regions{voi_idx,1} = compare(ls_m,sws_m,'NSim',10000);    %the base models (no surprisal) are nested into the model with
     %surprisal
     disp('Estimating comparison SwS vs base model......')
     results.comparisons.regions{voi_idx,2} = compare(fixed_sws,sws_m);
