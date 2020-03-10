@@ -17,8 +17,8 @@ bw_ls_preds = bw_ls_sdm.SDMMatrix(:,1:end-1);
 
 % sws_preds = [bw_sws_preds;fw_sws_preds];
 % ls_preds = [bw_ls_preds; fw_ls_preds];
-sws_preds = zscore([bw_sws_preds;fw_sws_preds]);
-ls_preds = zscore([bw_ls_preds; fw_ls_preds]);
+sws_preds = [bw_sws_preds;fw_sws_preds];
+ls_preds = [bw_ls_preds; fw_ls_preds];
 
 
 
@@ -37,9 +37,9 @@ NrOfVOIs = vvd.NrOfVOIs; VOIs_included = 1; %1:NrOfVOIs;
 NrOfVTCs = vvd.NrOfVTCs; VTCs_included = 1; %1:NrOfVTCs;
 
 
-sigs = zeros(NrOfVTCs, NT, NrOfVOIs);
+sigs = zeros(NT,NrOfVTCs, NrOfVOIs);
 for i = 1 : NrOfVTCs
-    sigs(i,:,:) = zscore(vvd.VTC(i).Values);
+    sigs(:,i,:) = zscore(vvd.VTC(i).Values);
 end
 
 
@@ -74,17 +74,17 @@ for voi_idx = 1:NrOfVOIs
     ls_data = repmat(ls_preds,27,1);
     %picking the fixed effects of each model (the fixed effects are
     %different because of the Gram-Schmidt othogonalization
-    sws_fixed = table(y,subs_id,speech_dir,sws_data(:,3),sws_data(:,4),sws_data(:,5),...
+    sws_fixed = table(y,zscore(subs_id),zscore(speech_dir),sws_data(:,3),sws_data(:,4),sws_data(:,5),...
         sws_data(:,6),sws_data(:,7),sws_data(:,8),...
         'VariableNames',{'SubjData','SubsName','SpeechDir','Freq','InvFreq','Dur','InvDur','Env','InvEnv'});
-    ls_fixed = table(y,subs_id,speech_dir,sws_data(:,3),sws_data(:,4),sws_data(:,5),...
+    ls_fixed = table(y,zscore(subs_id),zscore(speech_dir),sws_data(:,3),sws_data(:,4),sws_data(:,5),...
         sws_data(:,6),sws_data(:,7),sws_data(:,8),...
         'VariableNames',{'SubjData','SubsName','SpeechDir','Freq','InvFreq','Dur','InvDur','Env','InvEnv'});
     %tables of the two models
-    tbl_sws = table(y,subs_id,speech_dir,sws_data(:,1),sws_data(:,2),sws_data(:,3),sws_data(:,4),sws_data(:,5),...
+    tbl_sws = table(y,zscore(subs_id),zscore(speech_dir),sws_data(:,1),sws_data(:,2),sws_data(:,3),sws_data(:,4),sws_data(:,5),...
         sws_data(:,6),sws_data(:,7),sws_data(:,8),...
         'VariableNames',{'SubjData','SubsName','SpeechDir','SwS','InvSwS','Freq','InvFreq','Dur','InvDur','Env','InvEnv'});
-    tbl_ls = table(y,subs_id,speech_dir,ls_data(:,1),ls_data(:,2),ls_data(:,3),ls_data(:,4),ls_data(:,5),...
+    tbl_ls = table(y,zscore(subs_id),zscore(speech_dir),ls_data(:,1),ls_data(:,2),ls_data(:,3),ls_data(:,4),ls_data(:,5),...
         ls_data(:,6),ls_data(:,7),ls_data(:,8),...
         'VariableNames',{'SubjData','SubsName','SpeechDir','LS','InvLS','Freq','InvFreq','Dur','InvDur','Env','InvEnv'});
     %models with fixed effects. Subjects are treated as random effect
