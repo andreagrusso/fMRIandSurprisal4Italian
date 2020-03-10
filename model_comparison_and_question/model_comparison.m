@@ -5,11 +5,20 @@ clc
 
 sws_sdm = xff('fw_sem.sdm');
 %skip the constant
-sws_preds = zscore(sws_sdm.SDMMatrix(:,1:end-1));
+fw_sws_preds = sws_sdm.SDMMatrix(:,1:end-1);
 ls_sdm = xff('fw_lex.sdm');
 %skip the constant
-ls_preds = zscore(ls_sdm.SDMMatrix(:,1:end-1));
+fw_ls_preds = ls_sdm.SDMMatrix(:,1:end-1);
 
+bw_sws_sdm = xff('bw_sem.sdm');
+bw_sws_preds = bw_sws_sdm.SDMMatrix(:,1:end-1);
+bw_ls_sdm = xff('bw_lex.sdm');
+bw_ls_preds = bw_ls_sdm.SDMMatrix(:,1:end-1);
+
+% sws_preds = [bw_sws_preds;fw_sws_preds];
+% ls_preds = [bw_ls_preds; fw_ls_preds];
+sws_preds = zscore([bw_sws_preds;fw_sws_preds]);
+ls_preds = zscore([bw_ls_preds; fw_ls_preds]);
 
 
 
