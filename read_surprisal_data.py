@@ -11,22 +11,23 @@ import os
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-from stop_words import get_stop_words
+from datetime import datetime
+# from stop_words import get_stop_words
 from scipy.stats import zscore
 
 
-##STOPWORDS
-itstops = get_stop_words('it')
-itstops.append("c'è")
-itstops.append("c'era")
-itstops.append("c'erano")
-itstops.append("l'")
-itstops.append("'")
-itstops.append("dell'")
-itstops.append("nell'")
-itstops.append("un'")
-itstops.append("quell'")
-print('STOPWORDS LOADED!')
+# ##STOPWORDS
+# itstops = get_stop_words('it')
+# itstops.append("c'è")
+# itstops.append("c'era")
+# itstops.append("c'erano")
+# itstops.append("l'")
+# itstops.append("'")
+# itstops.append("dell'")
+# itstops.append("nell'")
+# itstops.append("un'")
+# itstops.append("quell'")
+# print('STOPWORDS LOADED!')
 
 
 ##INPUT DIRECTORY
@@ -130,5 +131,5 @@ mean_ls = np.mean(-np.log10(data[:,1]))
 print('Mean value SemSurp: ' + str(-np.log10(all_means[0])))
 print('Mean value LexSurp: ' + str(-np.log10(all_means[1])))
 
-output_name = 'surprisal_data_SwS_LS_SBSurp.txt'
+output_name = 'surprisal_data_' + datetime.today().strftime('%Y-%m-%d') +'.txt'
 np.savetxt(os.path.join(input_dir,output_name),data)
