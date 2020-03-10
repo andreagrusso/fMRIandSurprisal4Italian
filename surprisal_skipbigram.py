@@ -12,7 +12,6 @@ import numpy as np
 import os
 import csv
 from stop_words import get_stop_words
-import time
 
 ############################################################################
 # EMPTY VARIABLES
