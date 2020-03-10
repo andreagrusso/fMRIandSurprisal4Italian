@@ -118,7 +118,7 @@ os.system('clear')
 
 # NEW UNSEEN TEXT
 passage = 'gianna_words_noApos'#input('Name of the passage to analyze:  ')
-text = os.path.join(input_dir,'input', passage +'.txt')
+text = os.path.join('input', passage +'.txt')
 
 f=open(text, "r", encoding='utf-8-sig')
 all_words=[row[0].lower() for row in csv.reader(f, delimiter = '\n')]
@@ -127,7 +127,7 @@ print('TEXT LOADED!')
 
 
 # WORD VECTORS
-f = open(os.path.join(input_dir, 'input','word_vectors_vocab1000_105K.pkl'), 'rb')
+f = open(os.path.join('input','word_vectors_vocab1000_105K.pkl'), 'rb')
 word_vectors = pickle.load(f)
 print('WORD VECTORS LOADED!')
 
