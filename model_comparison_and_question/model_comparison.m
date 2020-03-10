@@ -4,19 +4,19 @@ clc
 %% Loading data (Models: SwS, LS) Forward and Backward
 
 sws_sdm = xff('fw_sem.sdm');
-% sws_preds = sws_sdm.SDMMatrix(:,1:2:7);
-sws_preds = zscore(sws_sdm.SDMMatrix(:,1:2:7));
+%skip the constant
+sws_preds = zscore(sws_sdm.SDMMatrix(:,1:end-1));
 ls_sdm = xff('fw_lex.sdm');
-% ls_preds = ls_sdm.SDMMatrix(:,1:2:7);
-ls_preds = zscore(ls_sdm.SDMMatrix(:,1:2:7));
+%skip the constant
+ls_preds = zscore(ls_sdm.SDMMatrix(:,1:end-1));
 
 
 
 
 %% Get the fMRI data
 
-%VVD_FileName = 'Lex_clc_p001';
-VVD_FileName = 'Sem_clc_p001';
+%VVD_FileName = 'BW_FW_Lex_clc_p001';
+VVD_FileName = 'BW_FW_Sem_clc_p001';
 vvd = xff([VVD_FileName,'.vvd']);
 voi_names = vvd.VOINames;
 %voi_names{3} = 'R-cerebellum';
