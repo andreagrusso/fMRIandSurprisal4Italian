@@ -1,3 +1,6 @@
 
 *.lm
 *.pkl
+*.wav
+*.asv
+sdm_mdm_generator/timestamps.mat
