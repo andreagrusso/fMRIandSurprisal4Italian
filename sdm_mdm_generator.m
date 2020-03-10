@@ -6,7 +6,7 @@ clc
 
 
 timestamps_struct = load('timestamps.mat');
-surp_data = dlmread('surprisal_data_12Jul19.txt');
+surp_data = dlmread(uigetfile('*.txt'));
 
 timestamps = timestamps_struct.timestamps;
 durations = timestamps_struct.durations;
@@ -17,7 +17,7 @@ lex_surp = surp_data(:,2);
 
 %% Path
 
-outdir = 'D:\protocolli_ruggi\natexp\analysis\vtc_smooth';
+outdir = 'BVanalysis';
 
 
 %% Acoustic predictors
@@ -76,8 +76,6 @@ fw_data.durations = durations;
 
 [fw_des_full,fw_des_sem,fw_des_lex] = create_preds(hrf,tt,t,fw_data,fss);
 
-% [Q_fw,R_fw] = gsog(fw_des_lex);
-% fw_des_lex = Q_fw;
 
 
 
@@ -167,7 +165,7 @@ disp(corrcoef(bw_des_full))
 
 %% Function for Preds Matrix creation 
 
-function [des_full,des_sem,des_lex,des_semprob,des_semdist]= create_preds(hrf,tt,t,data,fss)
+function [des_full,des_sem,des_lex]= create_preds(hrf,tt,t,data,fss)
 
     ref = zeros(size(hrf));
     ref_ss = zeros(size(hrf));
@@ -232,7 +230,7 @@ end
 
 function create_sdm(input_name,output_name,outdir,data,list_names,direction)
 
-    sdm = xff([outdir,'\',input_name]);
+    sdm = xff(input_name);
     TotPreds = size(list_names,2);
     sdm.SDMMatrix = zeros(size(data,1),TotPreds);
     sdm.NrOFPredictors = TotPreds;
