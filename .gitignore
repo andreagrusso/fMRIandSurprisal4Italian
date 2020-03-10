@@ -7,3 +7,4 @@ sdm_mdm_generator/timestamps.mat
 *.vtc
 *.sdm
 *.mdm
+*.vvd
