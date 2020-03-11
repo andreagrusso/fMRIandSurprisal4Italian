@@ -24,8 +24,8 @@ ls_preds = [bw_ls_preds; fw_ls_preds];
 
 %% Get the fMRI data
 
-%VVD_FileName = 'BW_FW_Lex_clc_p001';
-VVD_FileName = 'BW_FW_Sem_clc_p001';
+VVD_FileName = 'BW_FW_Lex_clc_p001';
+%VVD_FileName = 'BW_FW_Sem_clc_p001';
 vvd = xff([VVD_FileName,'.vvd']);
 voi_names = vvd.VOINames;
 %voi_names{3} = 'R-cerebellum';
