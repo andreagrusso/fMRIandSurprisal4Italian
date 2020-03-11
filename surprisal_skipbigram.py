@@ -12,6 +12,7 @@ import numpy as np
 import os
 import csv
 from stop_words import get_stop_words
+import time
 
 ############################################################################
 # EMPTY VARIABLES
@@ -34,19 +35,12 @@ def skip_bigram(c_word,all_words,idx,freq):
                 tmp_score = list(trigram.full_scores(word + ' ' + c_word, bos=False,eos=False))
                 if word in list(freq):
                     sb_vec.append(10**tmp_score[1][0]/freq[word]) #bigram
+                    hist_count+=1
                 else:
                     sb_vec.append(10**tmp_score[1][0]/min_freq) #bigram
-    else:
-        for word in all_words[idx-2:0:-1]:#skipping the word already use for trigram 
-            if (word not in itstops):
-                tmp_score = list(trigram.full_scores(word + ' ' + c_word, bos=False,eos=False))
-                if word in list(freq):
-                    sb_vec.append(10**tmp_score[1][0]/freq[word]) #bigram
-                else:
-                    sb_vec.append(10**tmp_score[1][0]/min_freq) #bigram
-  
-    if len(sb_vec) != 0:
-        sb_factor = (1/len(sb_vec))*sum(np.asarray(sb_vec)) 
+
+        print(len(sb_vec))
+        sb_factor = (1/len(sb_vec))*sum(np.asarray(sb_vec))    
     else:
         sb_factor = 0
 
@@ -110,6 +104,6 @@ for idx,word in enumerate(all_words):
     surp_sb.append([idx,skip_bigram(word,all_words,idx,freq)])
 
 
-f2 = open(os.path.join('output','lexical','skip_bigram_nosent_outlocalcontext_'+str(passage)+'_v02.txt'), 'wb')
+f2 = open(os.path.join('output','skip_bigram_'+str(passage)+'.txt'), 'wb')
 pickle.dump(surp_sb,f2)
 
