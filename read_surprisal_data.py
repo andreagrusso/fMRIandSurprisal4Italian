@@ -121,18 +121,18 @@ surp_skip = list(np.average(skip_bg_effect[idx_content_words,:],axis=0))
 log_surp_skip = list(np.average(log_skip_bg_effect[idx_content_words,:],axis=0))   
 
 #maximise probability --> minimize surprisal
-k_max = k_value[(surp_skip.index(max(surp_skip)))]
+#k_max = k_value[(surp_skip.index(max(surp_skip)))]
 k_min = k_value[(log_surp_skip.index(min(log_surp_skip)))]
 
-print("Minimum interpolation value: " + str(k_max))
+print("Minimum interpolation value: " + str(k_min))
 ###############################################################################
 
 print("Calculting the best interpolated surprisal model")
-best_surp = skip_bg_effect[:,(surp_skip.index(max(surp_skip)))]
-#tt = k_min*np.array(lex_surp) + (1-k_min)*np.array(surp_sb) 
+best_surp = log_skip_bg_effect[:,log_surp_skip.index(min(log_surp_skip))]
+#best_surp = k_min*np.array(lex_surp) + (1-k_min)*np.array(surp_sb) 
 
-data[:,0] = sem_surp
-data[:,1] = lex_surp
+data[:,0] = -np.log10(sem_surp)
+data[:,1] = -np.log10(lex_surp)
 data[:,2] = best_surp
 
 
@@ -155,12 +155,11 @@ plt.savefig(os.path.join(input_dir,'Skip-bigram_interpolation.png'),dpi=600)
 
 
 all_means = np.mean(data,axis=0)
-mean_ss = np.mean(-np.log10(data[idx_content_words,0]))
-mean_ls = np.mean(-np.log10(data[idx_content_words,1]))
 
-print('Mean value SemSurp: ' + str(-np.log10(all_means[0])))
-print('Mean value LexSurp: ' + str(-np.log10(all_means[1])))
-print('Mean value SkipBrigramurp: ' + str(-np.log10(all_means[2])))
 
-# output_name = 'surprisal_data_' + datetime.today().strftime('%Y-%m-%d') +'.txt'
-# np.savetxt(os.path.join(input_dir,output_name),data)
+print('Mean value SemSurp: ' + str(all_means[0]))
+print('Mean value LexSurp: ' + str(all_means[1]))
+print('Mean value SkipBrigramurp: ' + str(all_means[2]))
+
+output_name = 'surprisal_data_' + datetime.today().strftime('%Y-%m-%d') +'.txt'
+np.savetxt(os.path.join(input_dir,output_name),data)
