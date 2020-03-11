@@ -15,3 +15,8 @@ sdm_mdm_generator/timestamps.mat
 *.txt
 *.vmr
 *.txt
+*.vmp
+*.glm
+*.log
+model_comparison_and_question/BW_FW_Lex_clc_p001.mat
+model_comparison_and_question/BW_FW_Sem_clc_p001.mat
