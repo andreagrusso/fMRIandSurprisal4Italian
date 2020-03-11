@@ -104,21 +104,26 @@ k_value = np.linspace(0,1,101)
 skip_bg_effect = np.zeros([len(words),len(k_value)])
 log_skip_bg_effect = np.zeros([len(words),len(k_value)])
 
-
+#estiating the skipnigram interpolation
 for idx,kval in enumerate(k_value):
     skip_bg_effect[:,idx] = kval*lex_surp + (1-kval)*surp_sb
-    log_skip_bg_effect[:,idx] = -np.log10(kval*lex_surp + (1-kval)*surp_sb)
+    tmp_log = -np.log10(skip_bg_effect[:,idx])
+    tmp_log[tmp_log == np.inf] = np.max(tmp_log[tmp_log != np.inf])
+    log_skip_bg_effect[:,idx] = tmp_log
     
         
-log_skip_bg_effect[log_skip_bg_effect == np.inf] = np.max(log_skip_bg_effect[log_skip_bg_effect != np.inf])
+#log_skip_bg_effect[log_skip_bg_effect == np.inf] = np.max(log_skip_bg_effect[log_skip_bg_effect != np.inf])
     
 
 
 #average over the content words
 surp_skip = list(np.average(skip_bg_effect[idx_content_words,:],axis=0))   
+log_surp_skip = list(np.average(log_skip_bg_effect[idx_content_words,:],axis=0))   
 
 #maximise probability --> minimize surprisal
 k_max = k_value[(surp_skip.index(max(surp_skip)))]
+k_min = k_value[(log_surp_skip.index(min(log_surp_skip)))]
+
 print("Minimum interpolation value: " + str(k_max))
 ###############################################################################
 
@@ -143,7 +148,7 @@ plt.title('Surprisal values')
 plt.figure()
 plt.xlabel('Lambda')
 plt.ylabel('Surprisal')
-plt.plot(k_value,np.average(log_skip_bg_effect,axis=0))
+plt.plot(k_value,np.average(log_skip_bg_effect[idx_content_words,:],axis=0))
 plt.title("Skip-bigram interpolation effect")
 plt.savefig(os.path.join(input_dir,'Skip-bigram_interpolation.png'),dpi=600)
 
