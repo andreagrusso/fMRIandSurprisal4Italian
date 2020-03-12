@@ -7,7 +7,7 @@ clc
 
 timestamps_struct = load('timestamps.mat');
 %file_data = uigetfile('*.txt')
-surp_data = dlmread('../output/surprisal_data_2020-03-11.txt');
+surp_data = dlmread('../output/surprisal_data_prob2020-03-11.txt');
 
 timestamps = timestamps_struct.timestamps;
 durations = timestamps_struct.durations;
@@ -36,9 +36,9 @@ y_bw = [zeros(audio_start,1);y_bw;zeros(audio_end-audio_start-length(y_bw),1)];
 
 %% Lingusitic data
 
-ls = zscore(lex_surp); %lexical
+ls = zscore(-log10(lex_surp)); %lexical
 
-ss = zscore(sem_surp); %semantic
+ss = zscore(-log10(sem_surp)); %semantic
 
 fr = zscore(log10(freq/222153649)); %log of the relative frequency
 %fr = zscore(log10(freq)); %log of the relative frequency
