@@ -45,7 +45,7 @@ input_dir ='output'
 
 lex_surp_file = 'lex_surprisal_gianna.txt'
 sem_surp_file = 'sem_surprisal_gianna.txt'
-surp_sb_t = 'skip_bigram_gianna.txt'
+surp_sb_t = 'skip_bigram_gianna_words_noApos.txt'
 
 
 words =[]
