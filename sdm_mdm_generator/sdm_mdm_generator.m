@@ -7,7 +7,7 @@ clc
 
 timestamps_struct = load('timestamps.mat');
 %file_data = uigetfile('*.txt')
-surp_data = dlmread('../output/surprisal_data_prob2020-03-11.txt');
+surp_data = dlmread('../output/surprisal_data_prob2020-03-12.txt');
 
 timestamps = timestamps_struct.timestamps;
 durations = timestamps_struct.durations;
