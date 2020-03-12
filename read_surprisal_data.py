@@ -45,7 +45,7 @@ input_dir ='output'
 
 lex_surp_file = 'lex_surprisal_gianna.txt'
 sem_surp_file = 'sem_surprisal_gianna.txt'
-surp_sb_t = 'skip_bigram_gianna.txt '
+surp_sb_t = 'skip_bigram_gianna.txt'
 
 
 words =[]
@@ -89,6 +89,7 @@ idx_content_words = [idx for idx,word in enumerate(words) if word not in itstops
 
 #SwS, LS and SkipBigramLS
 data = np.empty((len(sem_surp),3))
+probdata = np.empty((len(sem_surp),3))
 
 sem_surp = np.asarray(sem_surp)
 lex_surp = np.asarray(lex_surp)
@@ -122,6 +123,7 @@ log_surp_skip = list(np.average(log_skip_bg_effect[idx_content_words,:],axis=0))
 
 #maximise probability --> minimize surprisal
 #k_max = k_value[(surp_skip.index(max(surp_skip)))]
+
 k_min = k_value[(log_surp_skip.index(min(log_surp_skip)))]
 
 print("Minimum interpolation value: " + str(k_min))
@@ -135,7 +137,9 @@ data[:,0] = -np.log10(sem_surp)
 data[:,1] = -np.log10(lex_surp)
 data[:,2] = best_surp
 
-
+probdata[:,0] = sem_surp
+probdata[:,1] = lex_surp
+probdata[:,2] = k_min*np.array(lex_surp) + (1-k_min)*np.array(surp_sb)
 
 
 
@@ -163,3 +167,6 @@ print('Mean value SkipBrigramurp: ' + str(all_means[2]))
 
 output_name = 'surprisal_data_' + datetime.today().strftime('%Y-%m-%d') +'.txt'
 np.savetxt(os.path.join(input_dir,output_name),data)
+
+output_name = 'surprisal_data_prob' + datetime.today().strftime('%Y-%m-%d') +'.txt'
+np.savetxt(os.path.join(input_dir,output_name),probdata)
