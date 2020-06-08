@@ -152,8 +152,8 @@ plt.title('Surprisal values')
 plt.figure()
 plt.xlabel('Lambda')
 plt.ylabel('Surprisal')
-plt.plot(k_value,np.average(log_skip_bg_effect[idx_content_words,:],axis=0))
-plt.title("Skip-bigram interpolation effect")
+plt.plot(k_value,np.average(log_skip_bg_effect,axis=0))
+#plt.title("Skip-bigram interpolation effect")
 plt.savefig(os.path.join(input_dir,'Skip-bigram_interpolation.png'),dpi=600)
 
 
